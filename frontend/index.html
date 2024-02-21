@@ -1,36 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Cinemate Seat Booking</title>
-  </head>
-  <body>
-    
-    
-  <div class="navbar">
-    <a href="#" onclick="openHome()">Home</a>
-    <a href="#">Movies</a>
-    <div class="dropdown">
-      <a href="#" onclick="openBookTickets()">Tickets</a>
-      </div>
-  
-  <script>
-   
-   function openHome(){
-      window.location.href="Cinemate.html";
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineMate</title>
+  <style>
+    body {
+      font-family: "Lato", sans-serif;
+      background-color: #000000;
+      color: #fff;
+      margin: 0;
     }
-    function openBookTickets() {
+
+    .navbar {
+      background-color: #0a0a0af5;
+      padding: 10px;
+      margin-left: 0px;
+      text-align: center;
+      border-radius: 10px;
+      font-family: "Lato", sans-serif;
+    }
+
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+    }
+    .header {
+      background-image: url('header-image.jpeg');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      padding: 105px 20px;
+      border-radius: 50px;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .Text h2 {
+      margin-bottom: 30px;
+      color: rgba(203, 5, 5, 0.837);
+      text-align: center;
+      
+      margin-right: 1200px;
+      max-width: 400px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+      
+    }
+
+    .card, .card1 {
+      position: relative;
+      width: 210px;
+      height: 550px;
+      margin: 10px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease-in-out;
+      
+    
+    }
+
+    .card:hover, .card1:hover {
+      transform: scale(1.05);
+    }
+
+    .card img, .card1 img {
+      width: 100%;
+      height: 70%;
+      object-fit: cover;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+     
+    }
+
+    .card-content, .card1-content {
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 60%;
+      
+    }
+
+    .card h3, .card1 h3 {
+      margin-bottom: 10px;
+    }
+
+    .actions, .actions1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 1;
+      position: relative;
+    }
+
+    .bookmark {
+      color: #ff0000;
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 10;
+      z-index: 3;
+      position: relative;
+    }
+    .h3{
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.7);
+      color:#f1f1f1;
+      min-width: 190px;
+      box-shadow: 0 8px 16px rgba(59, 59, 59, 0.2);
+      z-index: 1;
+    }
+
+.dropdown:hover .dropdown-content {
+      display: block;
+      
+    }
+
+    
+    .dropdown-content a {
+      color: rgb(255, 255, 255);
+      padding: 10px 10px;
+      text-decoration: none;
+       display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #1a1919;
+    }
+
+  </style>
+  <script>
+  book.addEventListener('click', function (event) {
+    event.preventDefault();
+    openCinematePage();
+  });
+  function openCinematePage() {
+       window.location.href = 'Cinemate.html';
+  }
+  
+  function openBookTickets() {
       // Redirect to the index.html page
       window.location.href = 'index.html';
     }
     function movieinfo(){
     window.location.href="movieinfo.html";
     }
-    </script>
- 
+    function logout() {
+      localStorage.removeItem('userEmail'); // Clear email from local storage
+      window.location.href = './login.html'; // Redirect to login page
+    }
+
+    function check() {
+  // Check if email is stored in local storage
+  const userEmail = localStorage.getItem('userEmail');
+
+  if (userEmail) {
+    // Email exists in local storage
+    console.log('Email found in local storage:', userEmail);
+    // Perform actions like displaying user-specific content, etc.
+  } else {
+    // Email does not exist in local storage
+    console.log('No email found in local storage');
+    // Perform actions like redirecting to the login page, displaying a login prompt, etc.
+  }
+}
+
+// Call the function when the page loads
+
+  </script>
+</head>
+<body>
+    <div>
+        <button onclick="check()">Click Me</button>
+    </div>
+  <div class="navbar">
+    <a href="/movie/frontend/index.html" onclick="openHome()">Home</a>
+    <a href="./movieinfo.html">Movies</a>
+    <div class="dropdown">
+      <a href="./ticket.html" onclick="openBookTickets()">Tickets</a>
+      </div>
+    
  
   <div class="dropdown">
   <a href="#">Friends</a>
@@ -43,112 +214,133 @@
   <div class="dropdown">
     <a href="#">Profile</a> 
     <div class="dropdown-content">
-      <a href="#">Edit</a>
-      <a href="#">Delete Account</a>
-      <a href="#">Log out</a>
+      
+      <a href="./myprofile.html">My Tickets</a>
+      <a href="#" onclick="logout()">Log out</a>
     </div>
   </div>
 </div>
+
+<div class="header">
+  <h1>Welcome to CinéMate</h1>
+  <h3>Stay connected with your friends with Unlimited movies, TV shows, and more....</h3>
 </div>
-    <div class="movie-container">
-      <label> Select a movie:</label>
-      <select id="movie">
-        <option value="220">Animal (RS.220)</option>
-        <option value="320">Fight Club (RS.320)</option>
-        <option value="250">Dunki(RS.250)</option>
-        <option value="260">Deadpool (RS.260)</option>
-        <option value="220">The Banshess Of Inisherin (RS.220)</option>
-        <option value="320">Past Lives(RS.320)</option>
+
+<div class="Text">
+  <h2>Top IMDb</h2>
+</div>
+
+<div class="card-container" onclick="movieinfo()">
+  <div class="card">
+    <img src="movie1.jpeg" alt="Animal">
+    <div class="card-content">
+      <h3>Animal</h3>
+      <div class="actions">
+        <div class="bookmark">&#9733;</div>
+       </div> 
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="movie2.jpg" alt="Dunki">
+    <div class="card-content">
+      <h3>Dunki</h3>
+      <div class="actions">
+        <div class="bookmark">&#9733;</div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="movie3.jpg" alt="Fight Club">
+    <div class="card-content">
+      <h3>Fight Club</h3>
+      <div class="actions">
+        <div class="bookmark">&#9733;</div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="movie4.jpeg" alt="Deadpool">
+    <div class="card-content">
+      <h3>Deadpool</h3>
+      <div class="actions">
+        <div class="bookmark">&#9733;</div>
        
-      </select>
-    </div>
-
-    <ul class="showcase">
-      <li>
-        <div class="seat"></div>
-        <small>Available</small>
-      </li>
-      <li>
-        <div class="seat selected"></div>
-        <small>Selected</small>
-      </li>
-      <li>
-        <div class="seat sold"></div>
-        <small>Sold</small>
-      </li>
-    </ul>
-    <div class="container">
-      <div class="screen"></div>
-
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat"></div>
       </div>
     </div>
+  </div>
 
-    <p class="text">
-      You have selected <span id="count">0</span> seat for a price of RS.<span
-        id="total"
-        >0</span
-      >
-    </p>
-    <script src="script.js"></script>
-  </body>
+
+  <div class="card">
+    <img src    ="movie5.jpeg" alt="The Banshess Of Inisherin">
+    <div class="card-content">
+      <h3>The Banshess Of Inisherin</h3>
+      <div class="actions">
+        <div class="bookmark">&#9733;</div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="card    ">
+    <img src="movie6.jpeg" alt="Doctor Strange">
+    <div class="card-content">
+      <h3>Past Lives</h3>
+      <div class="actions">
+        <div class="bookmark">&#9733;</div>
+      
+      </div>
+    </div>
+  </div><br>
+
+
+
+
+
+
+  <div class="Text">
+    <h2>CineMates Activity</h2>
+  </div>
+  <div class="card-container">
+  <div class="card">
+    <img src="fmovie1.jpeg" alt="LUDO">
+    <div class="card-content">
+      <h3>LUDO</h3>
+      
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="fmovie2.jpeg" alt="Barbie">
+    <div class="card-content">
+      <h3>Barbie</h3>
+     
+       
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="fmovie3.jpeg" alt="Life in a Metro">
+    <div class="card-content">
+      <h3>Life in a Metro</h3>
+      
+    
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="fmovie4.jpeg" alt="Golmaal">
+    <div class="card-content">
+      <h3>Golmaal</h3>
+  </div>
+  </div>
+
+</div>
+
+</body>
 </html>

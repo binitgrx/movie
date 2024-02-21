@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <style>
+    /* Add your CSS styles here */
+    /* For simplicity, I'll omit the styles */
+  </style>
+</head>
+<body>
+  <h1>Admin Page - Upload Movie</h1>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" required></textarea>
+    </div>
+    <div>
+      <label for="photo">Photo:</label>
+      <input type="file" id="photo" name="photo" accept="image/jpeg, image/png" required>
+    </div>
+    <button type="submit">Upload Movie</button>
+  </form>
+  
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+
+      try {
+        const response = await fetch('http://localhost:5002/ticket/create', {
+          method: 'POST',
+          body: formData,
+        });
+        if (response.ok) {
+          alert('Movie uploaded successfully!');
+          // Reset form fields after successful upload if needed
+          this.reset();
+        } else {
+          const errorMessage = await response.text();
+          alert(`Error: ${errorMessage}`);
+        }
+      } catch (error) {
+        console.error('Error uploading movie:', error);
+        alert('An error occurred while uploading the movie. Please try again later.');
+      }
+    });
+  </script>
+</body>
+</html>
