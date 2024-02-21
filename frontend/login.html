@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
-  <style>
-    body {
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Login Page</title>
+   <style>
+     body {
       font-family: 'Arial', sans-serif;
       background-color: #111;
       margin: 0;
@@ -82,192 +83,119 @@
     .btn:hover {
       background-color: #2980b9;
     }
-  </style>
-  <script src="script.js"></script>
-
-</head>
-<body>
-<div class="login-container">
-  
-  <div class="tab">
-    <a href="#" id="loginTab">Login</a>
-    <a href="#" id="signupTab">Sign Up</a>
-  </div>
-
-  <div class="form-content" id="loginForm">
-    
-      <div class="input-group">
-        
-        <label for="loginUsername">Email:</label>
-        <input type="email" id="email" class="form-control" name="email" required>
-      </div>
-      <div class="input-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" class="form-control" name="Password" required>
-      </div>
-      <button type="submit" id="login" class="btn">Login</button>
-  </div>
-
-  <div class="form-content" id="signupForm" style="display: none;">
-      <div class="input-group">
-        <label for="signupUsername">Username:</label>
-        <input type="text" id="username" class="form-control" name="username" required>
-        <label for="signupUsername">Email:</label>
-        <input type="email" id="Signemail" name="signupUsername" required>
-      </div>
-      <div class="input-group">
-        <label for="signupPassword">Password:</label>
-        <input type="password" id="Signpassword" name="signupPassword" required>
-      </div>
-    
-      <button type="submit" id="signup" class="btn">Sign Up</button>
-  </div>
-</div>
-
-
-<script>
-
-  const loginTab = document.getElementById('loginTab');
-  const signupTab = document.getElementById('signupTab');
-  const loginForm = document.getElementById('loginForm');
-  const signupForm = document.getElementById('signupForm');
-
-  loginTab.addEventListener('click', function (event) {
-    event.preventDefault();
-    loginForm.style.display = 'block';
-    signupForm.style.display = 'none';
-  });
-
-  signupTab.addEventListener('click', function (event) {
-    event.preventDefault();
-    loginForm.style.display = 'none';
-    signupForm.style.display = 'block';
-  });
-</script>
-
-</body>
-<script type="module">
-    // Import the functions you need from the SDKs you need
-     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-     import { getDatabase,set,ref,update } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
-     import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDWHkb6r6WgKL_e_O8Cg2IAq5mqL9S5OvQ",
-    authDomain: "cinemate-af6cc.firebaseapp.com",
-    databaseURL: "https://cinemate-af6cc-default-rtdb.firebaseio.com",
-    projectId: "cinemate-af6cc",
-    storageBucket: "cinemate-af6cc.appspot.com",
-    messagingSenderId: "967205931311",
-    appId: "1:967205931311:web:aef31c0bfab31c46d9b9da"
-  };
+   </style>
+ </head>
+ <body>
+ <div class="login-container">
    
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-    const auth = getAuth();
-    signup.addEventListener('click',(e)=>{
-        var email=document.getElementById('Signemail').value;
-        var password=document.getElementById('Signpassword').value;
-        var username=document.getElementById('username').value;
-        createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    set(ref(database,'users/' +user.uid),{
-      username:username,
-      email:email
-    })
-    alert('User Registerd!');
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert (errorMessage);
-    // ..
-  });
-    });  
-    
-    login.addEventListener('click', (e) => {
-    var email = document.getElementById('email').value.trim();
-    var password = document.getElementById('password').value;
-
-    if (!email || !password) {
-      alert('Please enter both email and password.');
-      return;
-}
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const dt = new Date();
-
-        update(ref(database, 'users/' + user.uid), {
-          last_login: dt.toString(), // Assuming last_login should be a string
-          // Add other properties as needed
-        });
-
-        //alert('Logged In Successfully!');
-        login.addEventListener('click', function (event) {
-      event.preventDefault();
-      openCinematePage();
-    });
-    function openCinematePage() {
-  // Code to open cinemate.html
-  window.location.href = 'Cinemate.html';
-  alert("Logged In Successfully!");
-}
-      })
-      
-      .catch((error) => {
-        console.error(error);
-        alert(error.message);
-      })
-    
-  }
-  );
-  /*const user=auth.currentUser;
-
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in
-    // You can perform actions for a signed-in user here
-    const uid = user.uid;
-
-    // Open cinemate.html when the login button is clicked
-    login.addEventListener('click', function (event) {
-      event.preventDefault();
-      openCinematePage();
-    });
-  } else {
-    // User is signed out
-    // You might want to remove the click event listener or perform other actions
-    login.removeEventListener('click', openCinematePage);
-  }
-
-});
-
-function openCinematePage() {
-  // Code to open cinemate.html
-  window.location.href = 'cinemate.html';
-}
-logout.addEventListener('click',(e)=>{
-  signOut(auth).then(() => {
-    alert('User Logged Out');
-  // Sign-out successful.
-}).catch((error) => {
-  // An error happened.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert (errorMessage);
-})
-})*/
-</script>
-
-</html>
+   <div class="tab">
+     <a href="#" id="loginTab">Login</a>
+     <a href="#" id="signupTab">Sign Up</a>
+   </div>
+ 
+   <div class="form-content" id="loginForm">
+     <div class="input-group">
+       <label for="email">Email:</label>
+       <input type="email" id="email" name="email" required>
+     </div>
+     <div class="input-group">
+       <label for="password">Password:</label>
+       <input type="password" id="password" name="password" required>
+     </div>
+     <button type="submit" id="login" class="btn">Login</button>
+   </div>
+ 
+   <div class="form-content" id="signupForm" style="display: none;">
+     <div class="input-group">
+       <label for="name">Name:</label>
+       <input type="text" id="name" name="name" required>
+     </div>
+     <div class="input-group">
+       <label for="email">Email:</label>
+       <input type="email" id="signupEmail" name="email" required>
+     </div>
+     <div class="input-group">
+       <label for="password">Password:</label>
+       <input type="password" id="signupPassword" name="password" required>
+     </div>
+     <button type="submit" id="signup" class="btn">Sign Up</button>
+   </div>
+ </div>
+ 
+ <script>
+   const loginTab = document.getElementById('loginTab');
+   const signupTab = document.getElementById('signupTab');
+   const loginForm = document.getElementById('loginForm');
+   const signupForm = document.getElementById('signupForm');
+ 
+   loginTab.addEventListener('click', function (event) {
+     event.preventDefault();
+     loginForm.style.display = 'block';
+     signupForm.style.display = 'none';
+   });
+ 
+   signupTab.addEventListener('click', function (event) {
+     event.preventDefault();
+     loginForm.style.display = 'none';
+     signupForm.style.display = 'block';
+   });
+ 
+   // Function to handle signup form submission
+   document.getElementById('signup').addEventListener('click', function(event) {
+     event.preventDefault();
+     
+     const name = document.getElementById('name').value;
+     const email = document.getElementById('signupEmail').value;
+     const password = document.getElementById('signupPassword').value;
+ 
+     // Make a POST request to the backend /register endpoint
+     fetch('http://localhost:5002/register', {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({ name, email, password }),
+     })
+     .then(response => response.text())
+     .then(data => {
+       console.log(data); // Log response from the server
+       alert(data); // Show response message to the user
+     })
+     .catch(error => {
+       console.error('Error:', error);
+       alert('An error occurred. Please try again later.');
+     });
+   });
+ 
+   // Function to handle login form submission
+   document.getElementById('login').addEventListener('click', function(event) {
+     event.preventDefault();
+     
+     const email = document.getElementById('email').value;
+     const password = document.getElementById('password').value;
+ 
+     // Make a POST request to the backend /login endpoint
+     fetch('http://localhost:5002/login', {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+       body: JSON.stringify({ email, password }),
+     })
+     .then(response => response.text())
+     .then(data => {
+      localStorage.setItem('userEmail', email);
+       console.log(data); // Log response from the server
+       
+       window.location.href = 'http://localhost:5501/movie/frontend/'; // Redirect to homepage after successful login
+     })
+     .catch(error => {
+       console.error('Error:', error);
+       alert('An error occurred. Please try again later.');
+     });
+   });
+ </script>
+ 
+ </body>
+ </html>
+ 

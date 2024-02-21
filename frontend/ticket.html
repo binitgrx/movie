@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Details</title>
+  <style>
+    /* Add your CSS styles here */
+    /* For simplicity, I'll omit the styles */
+  </style>
+</head>
+<body>
+  <h1>Ticket Details</h1>
+
+  <div id="ticketDetails"></div>
+
+  <h2>Upload Payment Slip</h2>
+
+  <form id="uploadForm" enctype="multipart/form-data">
+    <div>
+      <label for="number">Ticket No:</label>
+      <input type="text" id="number" name="number" required>
+    </div>
+    <div>
+      <label for="paymentSlip">Payment Slip:</label>
+      <input type="file" id="paymentSlip" name="photo" accept="image/jpeg, image/png" required>
+    </div>
+    <button type="submit">Upload Ticket Details</button>
+  </form>
+
+  <script>
+    // Extract ticket ID from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const ticketId = urlParams.get('ticketId');
+
+    console.log('Ticket ID:', ticketId); // Log ticket ID to console for checking
+
+    // Fetch ticket details using the ticket ID
+    fetchTicket(ticketId);
+
+    function fetchTicket(ticketId) {
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            const ticket = JSON.parse(xhr.responseText);
+            // Once the ticket details are fetched, populate the form fields
+            document.getElementById('number').value = ticket.number;
+            // Include name and description in the form data
+            document.getElementById('uploadForm').addEventListener('submit', function(event) {
+              event.preventDefault();
+              const formData = new FormData(this);
+              const userEmail = localStorage.getItem('userEmail');
+              formData.append('name', ticket.name);
+              formData.append('description', ticket.description);
+              
+              formData.append('email', userEmail);
+              uploadTicketDetails(formData);
+            });
+            // Render ticket details if needed
+            renderTicketDetails(ticket);
+          } else {
+            console.error('Error fetching ticket:', xhr.statusText);
+          }
+        }
+      };
+      xhr.open('GET', `http://localhost:5002/ticket/${ticketId}`);
+      xhr.send();
+    }
+
+    async function uploadTicketDetails(formData) {
+      try {
+        const response = await fetch('http://localhost:5002/ticketdetail/create', {
+          method: 'POST',
+          body: formData,
+        });
+        if (response.ok) {
+          alert('Ticket details uploaded successfully!');
+        } else {
+          const errorMessage = await response.text();
+          alert(`Error: ${errorMessage}`);
+        }
+      } catch (error) {
+        console.error('Error uploading ticket details:', error);
+        alert('An error occurred while uploading the ticket details. Please try again later.');
+      }
+    }
+
+    function renderTicketDetails(ticket) {
+      const ticketDetailsContainer = document.getElementById('ticketDetails');
+      ticketDetailsContainer.innerHTML = `
+        <h3>${ticket.name}</h3>
+        <p>${ticket.description}</p>
+        ${ticket.photo ? `<img src="data:image/jpeg;base64,${ticket.photo}" alt="Ticket Photo">` : ''}
+      `;
+    }
+  </script>
+</body>
+</html>
