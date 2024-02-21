@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Movie Upload</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    form {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    input[type="file"] {
+        margin-top: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<form id="movieForm" enctype="multipart/form-data">
+    <label for="title">Movie Title:</label>
+    <input type="text" id="title" name="title" required>
+    <label for="details">Movie Details:</label>
+    <textarea id="details" name="details" rows="4" required></textarea>
+    <label for="image">Movie Image:</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
+    <button type="submit">Upload Movie</button>
+</form>
+
+<div id="preview"></div>
+
+<script>
+    document.getElementById('movieForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        var preview = document.getElementById('preview');
+        var title = formData.get('title');
+        var details = formData.get('details');
+        var file = formData.get('image');
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            var img = document.createElement('img');
+            img.src = reader.result;
+            preview.innerHTML = '';
+            preview.appendChild(img);
+        }
+
+        reader.readAsDataURL(file);
+
+        // You can send formData to your server using AJAX to process the upload
+        // For simplicity, we are just logging the data here
+        console.log('Title:', title);
+        console.log('Details:', details);
+        console.log('Image File:', file);
+    });
+</script>
+
+</body>
+</html>
